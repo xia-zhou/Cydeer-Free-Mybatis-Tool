@@ -1,1 +1,1 @@
-rootProject.name = "Free MyBatis Tool"
+rootProject.name = "Cydeer Free MyBatis Tool"

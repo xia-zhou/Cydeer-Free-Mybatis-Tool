@@ -1,12 +1,12 @@
 <idea-plugin>
-    <id>com.tianlei.plugin.mybatis</id>
-    <name>Free MyBatis Tool</name>
-    <version>2.2.2</version>
-    <vendor email="156751282@qq.com" url="https://github.com/moztl/Free-Mybatis-Tool">tianlei</vendor>
+    <id>com.cydeer.plugin.mybatis</id>
+    <name>Cydeer Free MyBatis Tool</name>
+    <version>2.2.3</version>
+    <vendor email="zhangs_10@163.com" url="https://github.com/xia-zhou/Cydeer-Free-Mybatis-Tool">tianlei</vendor>
     <idea-version since-build="222"/>
     <description>
-    <![CDATA[
-        Free Mybatis Tool <br/>
+        <![CDATA[
+        Cydeer Free MyBatis Tool  <br/>
         Refactor and support the latest version of idea.</br>
         Free MyBatis Plugins is a plugin that enhances idea support for mybatis.</br>
         Here is the main functions:</br>
@@ -15,17 +15,15 @@
             <li>navigate from the code to mapper and from the mapper back to code</li>
             <li>auto code and error tips</li>
             <li>support mybatis generator gui</li>
-            <li>generate swagger model annotation</li>
         </ul>
 
-        Free MyBatis Tool 是一款增强idea对mybatis支持的插件。<br/>
+        Cydeer Free MyBatis Tool  是一款增强idea对mybatis支持的插件。<br/>
         主要功能如下：<br/>
         <ul>
             <li>生成mapper xml文件</li>
             <li>快速从代码跳转到mapper及从mapper返回代码</li>
             <li>mybatis自动补全及语法错误提示</li>
             <li>集成mybatis generator gui界面</li>
-            <li>根据数据库注解，生成swagger model注解</li>
         </ul>
 
         Getting started <br/>

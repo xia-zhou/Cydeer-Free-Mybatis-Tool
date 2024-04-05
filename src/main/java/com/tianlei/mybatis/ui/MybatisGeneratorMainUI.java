@@ -1,6 +1,5 @@
 package com.tianlei.mybatis.ui;
 
-
 import com.google.common.base.Joiner;
 import com.intellij.database.psi.DbTable;
 import com.intellij.ide.util.PackageChooserDialog;
@@ -37,74 +36,84 @@ import java.util.Map;
  */
 public class MybatisGeneratorMainUI extends JFrame {
 
-
     private AnActionEvent anActionEvent;
+
     private Project project;
+
     private PersistentConfig persistentConfig;
+
     private PsiElement[] psiElements;
+
     private Map<String, Config> initConfigMap;
+
     private Map<String, Config> historyConfigList;
+
     private Config config;
 
-
     private JPanel contentPane = new JBPanel<>();
-    private final JButton buttonOK = new JButton("ok");
-    private final JButton buttonCancel = new JButton("cancel");
-    private final JButton deleteConfigBtn = new JButton("DELETE");
 
+    private final JButton buttonCancel = new JButton("Cancel");
 
-    private final JTextField tableNameField = new JTextField(10);
+    private final JButton buttonOK = new JButton("OK");
 
-    private final JTextField modelNameField = new JTextField(10);
-    private final JBTextField modelPackageField = new JBTextField(12);
+    private final JButton deleteConfigBtn = new JButton("Del");
 
-    private final JTextField daoNameField = new JTextField(10);
-    private final JBTextField daoPackageField = new JBTextField(12);
+    private final JTextField tableNameField = new JTextField(25);
 
-    private final JTextField daoPostfixField = new JTextField(10);
+    //private final JTextField modelNameField = new JTextField(10);
 
-    private final JBTextField xmlPackageField = new JBTextField(12);
-    private final JTextField keyField = new JTextField(10);
+    private final JBTextField modelPackageField = new JBTextField(35);
+
+    //private final JTextField daoNameField = new JTextField(10);
+
+    private final JBTextField daoPackageField = new JBTextField(35);
+
+    //private final JTextField daoPostfixField = new JTextField(10);
+
+    private final JBTextField xmlPackageField = new JBTextField(25);
+
+    //private final JTextField keyField = new JTextField(10);
 
     private TextFieldWithBrowseButton projectFolderBtn = new TextFieldWithBrowseButton();
-    private final JTextField modelMvnField = new JBTextField(15);
-    private final JTextField daoMvnField = new JBTextField(15);
-    private final JTextField xmlMvnField = new JBTextField(15);
 
-    private final JCheckBox commentBox = new JCheckBox("Comment(实体注释)");
-    private final JCheckBox overrideXMLBox = new JCheckBox("Overwrite-Xml");
-    private final JCheckBox overrideJavaBox = new JCheckBox("Overwrite-Java");
-    private final JCheckBox needToStringHashcodeEqualsBox = new JCheckBox("toString/hashCode/equals");
-    private final JCheckBox useSchemaPrefixBox = new JCheckBox("Use-Schema(使用Schema前缀)");
-    private final JCheckBox annotationDAOBox = new JCheckBox("Repository-Annotation(Repository注解)");
-    private final JCheckBox useDAOExtendStyleBox = new JCheckBox("Parent-Interface(Dao公共父接口)");
-    private final JCheckBox jsr310SupportBox = new JCheckBox("JSR310: Date and Time API");
-    private final JCheckBox annotationBox = new JCheckBox("JPA-Annotation(JPA注解)");
-    private final JCheckBox useActualColumnNamesBox = new JCheckBox("Actual-Column(实际的列名)");
-    private final JCheckBox useTableNameAliasBox = new JCheckBox("Use-Alias(启用别名查询)");
-    private final JCheckBox useExampleBox = new JCheckBox("Use-Example");
-    private final JCheckBox offsetLimitBox = new JCheckBox("Page(分页，需开启Use-Example)");
-    private final JCheckBox needForUpdateBox = new JCheckBox("Add-ForUpdate(需开启Use-Example)");
-    private final JCheckBox useLombokBox = new JCheckBox("Use-Lombok");
+    //    private final JTextField modelMvnField = new JBTextField(15);
+    //
+    //    private final JTextField daoMvnField = new JBTextField(15);
+    //
+    //    private final JTextField xmlMvnField = new JBTextField(15);
 
+    //    private final JCheckBox commentBox = new JCheckBox("Comment(实体注释)");
+    //    private final JCheckBox overrideXMLBox = new JCheckBox("Overwrite-Xml");
+    //    private final JCheckBox overrideJavaBox = new JCheckBox("Overwrite-Java");
+    //    private final JCheckBox needToStringHashcodeEqualsBox = new JCheckBox("toString/hashCode/equals");
+    //    private final JCheckBox useSchemaPrefixBox = new JCheckBox("Use-Schema(使用Schema前缀)");
+    //    private final JCheckBox annotationDAOBox = new JCheckBox("Repository-Annotation(Repository注解)");
+    //    private final JCheckBox useDAOExtendStyleBox = new JCheckBox("Parent-Interface(Dao公共父接口)");
+    //    private final JCheckBox jsr310SupportBox = new JCheckBox("JSR310: Date and Time API");
+    //    private final JCheckBox annotationBox = new JCheckBox("JPA-Annotation(JPA注解)");
+    //    private final JCheckBox useActualColumnNamesBox = new JCheckBox("Actual-Column(实际的列名)");
+    //    private final JCheckBox useTableNameAliasBox = new JCheckBox("Use-Alias(启用别名查询)");
+    //    private final JCheckBox useExampleBox = new JCheckBox("Use-Example");
+    //    private final JCheckBox offsetLimitBox = new JCheckBox("Page(分页，需开启Use-Example)");
+    //    private final JCheckBox needForUpdateBox = new JCheckBox("Add-ForUpdate(需开启Use-Example)");
+    //    private final JCheckBox useLombokBox = new JCheckBox("Use-Lombok");
 
     public MybatisGeneratorMainUI(AnActionEvent anActionEvent) throws HeadlessException {
         this.anActionEvent = anActionEvent;
-        this.project = anActionEvent.getData(PlatformDataKeys.PROJECT);
-        this.persistentConfig = PersistentConfig.getInstance(project);
-        this.psiElements = anActionEvent.getData(LangDataKeys.PSI_ELEMENT_ARRAY);
+        project = anActionEvent.getData(PlatformDataKeys.PROJECT);
+        persistentConfig = PersistentConfig.getInstance(project);
+        psiElements = anActionEvent.getData(LangDataKeys.PSI_ELEMENT_ARRAY);
 
         initConfigMap = persistentConfig.getInitConfig();
         historyConfigList = persistentConfig.getHistoryConfigList();
 
-
         setTitle("MyBatis Generate Tool");
         if (psiElements.length > 1) {
-            setPreferredSize(new Dimension(1200, 550));//设置大小
+            setPreferredSize(new Dimension(700, 400));//设置大小
         } else {
-            setPreferredSize(new Dimension(1200, 650));//设置大小
+            setPreferredSize(new Dimension(700, 450));//设置大小
         }
-        setLocation(120, 100);
+        setLocation(200, 200);
         pack();
         setVisible(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -151,13 +160,13 @@ public class MybatisGeneratorMainUI extends JFrame {
         // xml mapper setting
         JPanel xmlMapperPanel = initXmlMapperSetting();
         // options
-        JBPanel optionsPanel = initOptionsPanel();
+        //JBPanel optionsPanel = initOptionsPanel();
 
         // main
         JPanel mainPanel = new JPanel();
         BoxLayout lo = new BoxLayout(mainPanel, BoxLayout.Y_AXIS);
         mainPanel.setLayout(lo);
-        mainPanel.setBorder(new EmptyBorder(10, 30, 5, 40));
+        mainPanel.setBorder(new EmptyBorder(10, 30, 5, 30));
         mainPanel.add(projectFolderPanel);
         if (!multiTable) {
             mainPanel.add(tablePanel);
@@ -165,14 +174,14 @@ public class MybatisGeneratorMainUI extends JFrame {
         mainPanel.add(modelPanel);
         mainPanel.add(daoPanel);
         mainPanel.add(xmlMapperPanel);
-        mainPanel.add(optionsPanel);
+        //mainPanel.add(optionsPanel);
 
         // historyConfig panel
-        JPanel historyConfigPanel = initHistoryConfigPanel();
+        //JPanel historyConfigPanel = initHistoryConfigPanel();
 
         // 确认和取消按钮
         JPanel paneBottom = new JPanel();
-        paneBottom.setLayout(new FlowLayout(2));
+        paneBottom.setLayout(new FlowLayout(FlowLayout.RIGHT));
         paneBottom.add(buttonOK);
         paneBottom.add(buttonCancel);
 
@@ -180,17 +189,19 @@ public class MybatisGeneratorMainUI extends JFrame {
         contentPane.setLayout(new BorderLayout());
         contentPane.add(mainPanel, BorderLayout.CENTER);
         contentPane.add(paneBottom, BorderLayout.SOUTH);
-        contentPane.add(historyConfigPanel, BorderLayout.WEST);
+        //contentPane.add(historyConfigPanel, BorderLayout.WEST);
         setContentPane(contentPane);
 
         buttonOK.addActionListener(e -> onOK());
         buttonCancel.addActionListener(e -> onCancel());
         addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 onCancel();
             }
         });
-        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+                                           JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     private void onOK() {
@@ -200,35 +211,42 @@ public class MybatisGeneratorMainUI extends JFrame {
             if (psiElements.length == 1) {
                 Config generator_config = new Config();
                 generator_config.setName(tableNameField.getText());
+                String modelName = StringUtils.dbStringToCamelStyle(tableNameField.getText());
                 generator_config.setTableName(tableNameField.getText());
                 generator_config.setProjectFolder(projectFolderBtn.getText());
 
                 generator_config.setModelPackage(modelPackageField.getText());
                 generator_config.setDaoPackage(daoPackageField.getText());
                 generator_config.setXmlPackage(xmlPackageField.getText());
-                generator_config.setDaoName(daoNameField.getText());
-                generator_config.setModelName(modelNameField.getText());
-                generator_config.setPrimaryKey(keyField.getText());
-
-                generator_config.setOffsetLimit(offsetLimitBox.getSelectedObjects() != null);
-                generator_config.setComment(commentBox.getSelectedObjects() != null);
-                generator_config.setOverrideXML(overrideXMLBox.getSelectedObjects() != null);
-                generator_config.setOverrideJava(overrideJavaBox.getSelectedObjects() != null);
-                generator_config.setNeedToStringHashcodeEquals(needToStringHashcodeEqualsBox.getSelectedObjects() != null);
-                generator_config.setUseSchemaPrefix(useSchemaPrefixBox.getSelectedObjects() != null);
-                generator_config.setNeedForUpdate(needForUpdateBox.getSelectedObjects() != null);
-                generator_config.setAnnotationDAO(annotationDAOBox.getSelectedObjects() != null);
-                generator_config.setUseDAOExtendStyle(useDAOExtendStyleBox.getSelectedObjects() != null);
-                generator_config.setJsr310Support(jsr310SupportBox.getSelectedObjects() != null);
-                generator_config.setAnnotation(annotationBox.getSelectedObjects() != null);
-                generator_config.setUseActualColumnNames(useActualColumnNamesBox.getSelectedObjects() != null);
-                generator_config.setUseTableNameAlias(useTableNameAliasBox.getSelectedObjects() != null);
-                generator_config.setUseExample(useExampleBox.getSelectedObjects() != null);
-                generator_config.setUseLombokPlugin(useLombokBox.getSelectedObjects() != null);
-
-                generator_config.setModelMvnPath(modelMvnField.getText());
-                generator_config.setDaoMvnPath(daoMvnField.getText());
-                generator_config.setXmlMvnPath(xmlMvnField.getText());
+                generator_config.setDaoName(modelName + "Mapper");
+                generator_config.setModelName(modelName + "PO");
+                generator_config.setPrimaryKey("id");
+                //generator_config.setOffsetLimit(offsetLimitBox.getSelectedObjects() != null);
+                //                useLombokBox.setSelected(true);
+                //                commentBox.setSelected(true);
+                //                overrideXMLBox.setSelected(true);
+                //                overrideJavaBox.setSelected(true);
+                //                useSchemaPrefixBox.setSelected(true);
+                //                annotationDAOBox.setSelected(true);
+                generator_config.setComment(true);
+                generator_config.setOverrideXML(true);
+                generator_config.setOverrideJava(true);
+                //                generator_config.setNeedToStringHashcodeEquals(
+                //                        needToStringHashcodeEqualsBox.getSelectedObjects() != null);
+                generator_config.setUseSchemaPrefix(true);
+                //generator_config.setNeedForUpdate(needForUpdateBox.getSelectedObjects() != null);
+                generator_config.setAnnotationDAO(true);
+                //generator_config.setUseDAOExtendStyle(useDAOExtendStyleBox.getSelectedObjects() != null);
+                generator_config.setJsr310Support(true);
+                //generator_config.setAnnotation(annotationBox.getSelectedObjects() != null);
+                //generator_config.setUseActualColumnNames(useActualColumnNamesBox.getSelectedObjects() != null);
+                //generator_config.setUseTableNameAlias(useTableNameAliasBox.getSelectedObjects() != null);
+                //generator_config.setUseExample(useExampleBox.getSelectedObjects() != null);
+                //generator_config.setUseLombokPlugin(useLombokBox.getSelectedObjects() != null);
+                generator_config.setUseLombokPlugin(true);
+                generator_config.setModelMvnPath("src/main/java");
+                generator_config.setDaoMvnPath("src/main/java");
+                generator_config.setXmlMvnPath("src/main/resources");
 
                 result = new MybatisGenerator(generator_config).execute(anActionEvent, true, psiElements[0]);
             } else {
@@ -249,29 +267,30 @@ public class MybatisGeneratorMainUI extends JFrame {
                     generator_config.setModelPackage(modelPackageField.getText());
                     generator_config.setDaoPackage(daoPackageField.getText());
                     generator_config.setXmlPackage(xmlPackageField.getText());
-                    generator_config.setDaoName(modelName + daoPostfixField.getText());
-                    generator_config.setModelName(modelName);
+                    generator_config.setDaoName(modelName + "Mapper");
+                    generator_config.setModelName(modelName + "PO");
                     generator_config.setPrimaryKey(primaryKey);
 
-                    generator_config.setOffsetLimit(offsetLimitBox.getSelectedObjects() != null);
-                    generator_config.setComment(commentBox.getSelectedObjects() != null);
-                    generator_config.setOverrideXML(overrideXMLBox.getSelectedObjects() != null);
-                    generator_config.setOverrideJava(overrideJavaBox.getSelectedObjects() != null);
-                    generator_config.setNeedToStringHashcodeEquals(needToStringHashcodeEqualsBox.getSelectedObjects() != null);
-                    generator_config.setUseSchemaPrefix(useSchemaPrefixBox.getSelectedObjects() != null);
-                    generator_config.setNeedForUpdate(needForUpdateBox.getSelectedObjects() != null);
-                    generator_config.setAnnotationDAO(annotationDAOBox.getSelectedObjects() != null);
-                    generator_config.setUseDAOExtendStyle(useDAOExtendStyleBox.getSelectedObjects() != null);
-                    generator_config.setJsr310Support(jsr310SupportBox.getSelectedObjects() != null);
-                    generator_config.setAnnotation(annotationBox.getSelectedObjects() != null);
-                    generator_config.setUseActualColumnNames(useActualColumnNamesBox.getSelectedObjects() != null);
-                    generator_config.setUseTableNameAlias(useTableNameAliasBox.getSelectedObjects() != null);
-                    generator_config.setUseExample(useExampleBox.getSelectedObjects() != null);
-                    generator_config.setUseLombokPlugin(useLombokBox.getSelectedObjects() != null);
+                    //generator_config.setOffsetLimit(offsetLimitBox.getSelectedObjects() != null);
+                    generator_config.setComment(true);
+                    generator_config.setOverrideXML(true);
+                    generator_config.setOverrideJava(true);
+                    //                    generator_config.setNeedToStringHashcodeEquals(
+                    //                            needToStringHashcodeEqualsBox.getSelectedObjects() != null);
+                    generator_config.setUseSchemaPrefix(true);
+                    //generator_config.setNeedForUpdate(needForUpdateBox.getSelectedObjects() != null);
+                    generator_config.setAnnotationDAO(true);
+                    //generator_config.setUseDAOExtendStyle(useDAOExtendStyleBox.getSelectedObjects() != null);
+                    generator_config.setJsr310Support(true);
+                    //generator_config.setAnnotation(annotationBox.getSelectedObjects() != null);
+                    //                    generator_config.setUseActualColumnNames(useActualColumnNamesBox.getSelectedObjects() != null);
+                    //                    generator_config.setUseTableNameAlias(useTableNameAliasBox.getSelectedObjects() != null);
+                    //                    generator_config.setUseExample(useExampleBox.getSelectedObjects() != null);
+                    generator_config.setUseLombokPlugin(true);
 
-                    generator_config.setModelMvnPath(modelMvnField.getText());
-                    generator_config.setDaoMvnPath(daoMvnField.getText());
-                    generator_config.setXmlMvnPath(xmlMvnField.getText());
+                    generator_config.setModelMvnPath("src/main/java");
+                    generator_config.setDaoMvnPath("src/main/java");
+                    generator_config.setXmlMvnPath("src/main/resources");
                     boolean needSaveConfig = historyConfigList == null || !historyConfigList.containsKey(tableName);
                     result = new MybatisGenerator(generator_config).execute(anActionEvent, needSaveConfig, psiElement);
                 }
@@ -300,20 +319,20 @@ public class MybatisGeneratorMainUI extends JFrame {
         projectFolderPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         JLabel projectLabel = new JLabel("Project Folder:");
         projectFolderPanel.add(projectLabel);
-        projectFolderBtn.setTextFieldPreferredWidth(45);
+        projectFolderBtn.setTextFieldPreferredWidth(60);
         if (config != null && !StringUtils.isEmpty(config.getProjectFolder())) {
             projectFolderBtn.setText(config.getProjectFolder());
         } else {
             projectFolderBtn.setText(projectFolder);
         }
-        projectFolderBtn.addBrowseFolderListener(new TextBrowseFolderListener(
-                FileChooserDescriptorFactory.createSingleFileOrFolderDescriptor()) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                super.actionPerformed(e);
-                projectFolderBtn.setText(projectFolderBtn.getText().replaceAll("\\\\", "/"));
-            }
-        });
+        projectFolderBtn.addBrowseFolderListener(
+                new TextBrowseFolderListener(FileChooserDescriptorFactory.createSingleFileOrFolderDescriptor()) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        super.actionPerformed(e);
+                        projectFolderBtn.setText(projectFolderBtn.getText().replaceAll("\\\\", "/"));
+                    }
+                });
         projectFolderPanel.add(projectFolderBtn);
         return projectFolderPanel;
     }
@@ -324,8 +343,8 @@ public class MybatisGeneratorMainUI extends JFrame {
     private JPanel initTableSetting(String tableName, String primaryKey) {
 
         JPanel tableNameFieldPanel = new JPanel();
-        tableNameFieldPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        JLabel tablejLabel = new JLabel("Table Name:");
+        tableNameFieldPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        JLabel tablejLabel = new JLabel(" table name:");
         tablejLabel.setSize(new Dimension(20, 30));
         tableNameFieldPanel.add(tablejLabel);
         if (psiElements.length > 1) {
@@ -335,20 +354,20 @@ public class MybatisGeneratorMainUI extends JFrame {
         }
         tableNameFieldPanel.add(tableNameField);
 
-        JPanel keyFieldPanel = new JPanel();
-        keyFieldPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        keyFieldPanel.add(new JLabel("Primary Key(optional):"));
-        if (psiElements.length > 1) {
-            keyField.addFocusListener(new JTextFieldHintListener(keyField, "eg:primary key"));
-        } else {
-            keyField.setText(primaryKey);
-        }
-        keyFieldPanel.add(keyField);
+        //        JPanel keyFieldPanel = new JPanel();
+        //        keyFieldPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        //        keyFieldPanel.add(new JLabel("Primary Key(optional):"));
+        //        if (psiElements.length > 1) {
+        //            keyField.addFocusListener(new JTextFieldHintListener(keyField, "eg:primary key"));
+        //        } else {
+        //            keyField.setText(primaryKey);
+        //        }
+        //        keyFieldPanel.add(keyField);
 
-        JPanel tablePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel tablePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 1));
         tablePanel.setBorder(BorderFactory.createTitledBorder("Table Setting"));
         tablePanel.add(tableNameFieldPanel);
-        tablePanel.add(keyFieldPanel);
+        //tablePanel.add(keyFieldPanel);
         return tablePanel;
     }
 
@@ -362,9 +381,9 @@ public class MybatisGeneratorMainUI extends JFrame {
         JPanel modelNameFieldPanel = new JPanel();
         modelNameFieldPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         if (!multiTable) {
-            modelNameFieldPanel.add(new JLabel("name:"));
-            modelNameField.setText(modelName);
-            modelNameFieldPanel.add(modelNameField);
+            // modelNameFieldPanel.add(new JLabel("name:"));
+            // modelNameField.setText(modelName);
+            //modelNameFieldPanel.add(modelNameField);
 
         }
         JBLabel labelLeft4 = new JBLabel("package:");
@@ -383,12 +402,12 @@ public class MybatisGeneratorMainUI extends JFrame {
             final PsiPackage psiPackage = chooser.getSelectedPackage();
             String packageName = psiPackage == null ? null : psiPackage.getQualifiedName();
             modelPackageField.setText(packageName);
-            MybatisGeneratorMainUI.this.toFront();
+            toFront();
         });
         modelNameFieldPanel.add(modelPackageFieldBtn);
-        modelNameFieldPanel.add(new JLabel("path:"));
-        modelMvnField.setText("src/main/java");
-        modelNameFieldPanel.add(modelMvnField);
+        //        modelNameFieldPanel.add(new JLabel("path:"));
+        //        modelMvnField.setText("src/main/java");
+        //        modelNameFieldPanel.add(modelMvnField);
 
         modelPanel.add(modelNameFieldPanel);
         return modelPanel;
@@ -400,54 +419,54 @@ public class MybatisGeneratorMainUI extends JFrame {
     private JPanel initDaoSetting(boolean multiTable, String modelName) {
         JPanel daoPanel = new JPanel();
         daoPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        daoPanel.setBorder(BorderFactory.createTitledBorder("Dao Setting"));
+        daoPanel.setBorder(BorderFactory.createTitledBorder("Mapper Setting"));
 
         JPanel daoNameFieldPanel = new JPanel();
         daoNameFieldPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         if (multiTable) { //多表
-            if (config != null && !StringUtils.isEmpty(config.getDaoPostfix())) {
+            /*if (config != null && !StringUtils.isEmpty(config.getDaoPostfix())) {
                 daoPostfixField.setText(config.getDaoPostfix());
             } else {
-                daoPostfixField.setText("Dao");
+                daoPostfixField.setText("Mapper");
             }
-            daoNameFieldPanel.add(new JLabel("dao postfix:"));
-            daoNameFieldPanel.add(daoPostfixField);
+            daoNameFieldPanel.add(new JLabel("Mapper postfix:"));
+            daoNameFieldPanel.add(daoPostfixField);*/
         } else {//单表
-            if (config != null && !StringUtils.isEmpty(config.getDaoPostfix())) {
+            /*if (config != null && !StringUtils.isEmpty(config.getDaoPostfix())) {
                 daoNameField.setText(modelName + config.getDaoPostfix());
             } else {
-                daoNameField.setText(modelName + "Dao");
+                daoNameField.setText(modelName + "Mapper");
             }
 
             daoNameFieldPanel.add(new JLabel("name:"));
-            daoNameFieldPanel.add(daoNameField);
+            daoNameFieldPanel.add(daoNameField);*/
 
         }
-        daoPanel.add(daoNameFieldPanel);
-
+        //daoPanel.add(daoNameFieldPanel);
 
         JLabel labelLeft5 = new JLabel("package:");
-        daoPanel.add(labelLeft5);
+        daoNameFieldPanel.add(labelLeft5);
         if (config != null && !StringUtils.isEmpty(config.getDaoPackage())) {
             daoPackageField.setText(config.getDaoPackage());
         } else {
             daoPackageField.setText("generate");
         }
-        daoPanel.add(daoPackageField);
+        daoNameFieldPanel.add(daoPackageField);
         JButton packageBtn2 = new JButton("...");
         packageBtn2.addActionListener(actionEvent -> {
-            final PackageChooserDialog chooser = new PackageChooserDialog("choose dao package", project);
+            final PackageChooserDialog chooser = new PackageChooserDialog("choose mapper package", project);
             chooser.selectPackage(daoPackageField.getText());
             chooser.show();
             final PsiPackage psiPackage = chooser.getSelectedPackage();
             String packageName = psiPackage == null ? null : psiPackage.getQualifiedName();
             daoPackageField.setText(packageName);
-            MybatisGeneratorMainUI.this.toFront();
+            toFront();
         });
-        daoPanel.add(packageBtn2);
-        daoPanel.add(new JLabel("path:"));
-        daoMvnField.setText("src/main/java");
-        daoPanel.add(daoMvnField);
+        daoNameFieldPanel.add(packageBtn2);
+        //        daoPanel.add(new JLabel("path:"));
+        //        daoMvnField.setText("src/main/java");
+        //        daoPanel.add(daoMvnField);
+        daoPanel.add(daoNameFieldPanel);
         return daoPanel;
     }
 
@@ -467,12 +486,12 @@ public class MybatisGeneratorMainUI extends JFrame {
         if (config != null && !StringUtils.isEmpty(config.getXmlPackage())) {
             xmlPackageField.setText(config.getXmlPackage());
         } else {
-            xmlPackageField.setText("generator");
+            xmlPackageField.setText("mapper");
         }
         xmlFieldPanel.add(xmlPackageField);
-        xmlFieldPanel.add(new JLabel("path:"));
-        xmlMvnField.setText("src/main/resources");
-        xmlFieldPanel.add(xmlMvnField);
+        //        xmlFieldPanel.add(new JLabel("path:"));
+        //        xmlMvnField.setText("src/main/resources");
+        //        xmlFieldPanel.add(xmlMvnField);
 
         xmlMapperPanel.add(xmlFieldPanel);
         return xmlMapperPanel;
@@ -484,48 +503,48 @@ public class MybatisGeneratorMainUI extends JFrame {
     private JBPanel initOptionsPanel() {
         JBPanel optionsPanel = new JBPanel(new GridLayout(5, 5, 5, 5));
         optionsPanel.setBorder(BorderFactory.createTitledBorder("Options"));
-        if (config == null) {
-            /**
-             * Default selected
-             **/
-            useLombokBox.setSelected(true);
-            commentBox.setSelected(true);
-            overrideXMLBox.setSelected(true);
-            overrideJavaBox.setSelected(true);
-            useSchemaPrefixBox.setSelected(true);
-            annotationDAOBox.setSelected(true);
-        } else {
-            offsetLimitBox.setSelected(config.isOffsetLimit());
-            commentBox.setSelected(config.isComment());
-            overrideXMLBox.setSelected(config.isOverrideXML());
-            overrideJavaBox.setSelected(config.isOverrideJava());
-            needToStringHashcodeEqualsBox.setSelected(config.isNeedToStringHashcodeEquals());
-            useSchemaPrefixBox.setSelected(config.isUseSchemaPrefix());
-            needForUpdateBox.setSelected(config.isNeedForUpdate());
-            annotationDAOBox.setSelected(config.isAnnotationDAO());
-            useDAOExtendStyleBox.setSelected(config.isUseDAOExtendStyle());
-            jsr310SupportBox.setSelected(config.isJsr310Support());
-            annotationBox.setSelected(config.isAnnotation());
-            useActualColumnNamesBox.setSelected(config.isUseActualColumnNames());
-            useTableNameAliasBox.setSelected(config.isUseTableNameAlias());
-            useExampleBox.setSelected(config.isUseExample());
-            useLombokBox.setSelected(config.isUseLombokPlugin());
-        }
-        optionsPanel.add(useLombokBox);
-        optionsPanel.add(commentBox);
-        optionsPanel.add(useSchemaPrefixBox);
-        optionsPanel.add(overrideJavaBox);
-        optionsPanel.add(overrideXMLBox);
-        optionsPanel.add(annotationDAOBox);
-        optionsPanel.add(needToStringHashcodeEqualsBox);
-        optionsPanel.add(useDAOExtendStyleBox);
-        optionsPanel.add(jsr310SupportBox);
-        optionsPanel.add(annotationBox);
-        optionsPanel.add(useActualColumnNamesBox);
-        optionsPanel.add(useTableNameAliasBox);
-        optionsPanel.add(useExampleBox);
-        optionsPanel.add(offsetLimitBox);
-        optionsPanel.add(needForUpdateBox);
+        //        if (config == null) {
+        //            /**
+        //             * Default selected
+        //             **/
+        //            useLombokBox.setSelected(true);
+        //            commentBox.setSelected(true);
+        //            overrideXMLBox.setSelected(true);
+        //            overrideJavaBox.setSelected(true);
+        //            useSchemaPrefixBox.setSelected(true);
+        //            annotationDAOBox.setSelected(true);
+        //        } else {
+        //            offsetLimitBox.setSelected(config.isOffsetLimit());
+        //            commentBox.setSelected(config.isComment());
+        //            overrideXMLBox.setSelected(config.isOverrideXML());
+        //            overrideJavaBox.setSelected(config.isOverrideJava());
+        //            needToStringHashcodeEqualsBox.setSelected(config.isNeedToStringHashcodeEquals());
+        //            useSchemaPrefixBox.setSelected(config.isUseSchemaPrefix());
+        //            needForUpdateBox.setSelected(config.isNeedForUpdate());
+        //            annotationDAOBox.setSelected(config.isAnnotationDAO());
+        //            useDAOExtendStyleBox.setSelected(config.isUseDAOExtendStyle());
+        //            jsr310SupportBox.setSelected(config.isJsr310Support());
+        //            annotationBox.setSelected(config.isAnnotation());
+        //            useActualColumnNamesBox.setSelected(config.isUseActualColumnNames());
+        //            useTableNameAliasBox.setSelected(config.isUseTableNameAlias());
+        //            useExampleBox.setSelected(config.isUseExample());
+        //            useLombokBox.setSelected(config.isUseLombokPlugin());
+        //        }
+        //        optionsPanel.add(useLombokBox);
+        //        optionsPanel.add(commentBox);
+        //        optionsPanel.add(useSchemaPrefixBox);
+        //        optionsPanel.add(overrideJavaBox);
+        //        optionsPanel.add(overrideXMLBox);
+        //        optionsPanel.add(annotationDAOBox);
+        //        optionsPanel.add(needToStringHashcodeEqualsBox);
+        //        optionsPanel.add(useDAOExtendStyleBox);
+        //        optionsPanel.add(jsr310SupportBox);
+        //        optionsPanel.add(annotationBox);
+        //        optionsPanel.add(useActualColumnNamesBox);
+        //        optionsPanel.add(useTableNameAliasBox);
+        //        optionsPanel.add(useExampleBox);
+        //        optionsPanel.add(offsetLimitBox);
+        //        optionsPanel.add(needForUpdateBox);
         return optionsPanel;
     }
 
@@ -533,7 +552,7 @@ public class MybatisGeneratorMainUI extends JFrame {
      * historyConfig panel
      */
     private JPanel initHistoryConfigPanel() {
-        this.getContentPane().add(Box.createVerticalStrut(10));
+        getContentPane().add(Box.createVerticalStrut(10));
         final DefaultListModel defaultListModel = new DefaultListModel();
 
         if (historyConfigList == null) {
@@ -547,9 +566,8 @@ public class MybatisGeneratorMainUI extends JFrame {
         final JBList configJBList = new JBList(defaultListModel);
         configJBList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         configJBList.setSelectedIndex(0);
-        configJBList.setVisibleRowCount(25);
+        configJBList.setVisibleRowCount(20);
         JBScrollPane ScrollPane = new JBScrollPane(configJBList);
-
 
         JPanel btnPanel = new JPanel();
         btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.X_AXIS));
@@ -566,21 +584,21 @@ public class MybatisGeneratorMainUI extends JFrame {
                         daoPackageField.setText(selectedConfig.getDaoPackage());
                         xmlPackageField.setText(selectedConfig.getXmlPackage());
                         projectFolderBtn.setText(selectedConfig.getProjectFolder());
-                        offsetLimitBox.setSelected(selectedConfig.isOffsetLimit());
-                        commentBox.setSelected(selectedConfig.isComment());
-                        overrideXMLBox.setSelected(selectedConfig.isOverrideXML());
-                        overrideJavaBox.setSelected(selectedConfig.isOverrideJava());
-                        needToStringHashcodeEqualsBox.setSelected(selectedConfig.isNeedToStringHashcodeEquals());
-                        useSchemaPrefixBox.setSelected(selectedConfig.isUseSchemaPrefix());
-                        needForUpdateBox.setSelected(selectedConfig.isNeedForUpdate());
-                        annotationDAOBox.setSelected(selectedConfig.isAnnotationDAO());
-                        useDAOExtendStyleBox.setSelected(selectedConfig.isUseDAOExtendStyle());
-                        jsr310SupportBox.setSelected(selectedConfig.isJsr310Support());
-                        annotationBox.setSelected(selectedConfig.isAnnotation());
-                        useActualColumnNamesBox.setSelected(selectedConfig.isUseActualColumnNames());
-                        useTableNameAliasBox.setSelected(selectedConfig.isUseTableNameAlias());
-                        useExampleBox.setSelected(selectedConfig.isUseExample());
-                        useLombokBox.setSelected(selectedConfig.isUseLombokPlugin());
+                        //                        offsetLimitBox.setSelected(selectedConfig.isOffsetLimit());
+                        //                        commentBox.setSelected(selectedConfig.isComment());
+                        //                        overrideXMLBox.setSelected(selectedConfig.isOverrideXML());
+                        //                        overrideJavaBox.setSelected(selectedConfig.isOverrideJava());
+                        //                        needToStringHashcodeEqualsBox.setSelected(selectedConfig.isNeedToStringHashcodeEquals());
+                        //                        useSchemaPrefixBox.setSelected(selectedConfig.isUseSchemaPrefix());
+                        //                        needForUpdateBox.setSelected(selectedConfig.isNeedForUpdate());
+                        //                        annotationDAOBox.setSelected(selectedConfig.isAnnotationDAO());
+                        //                        useDAOExtendStyleBox.setSelected(selectedConfig.isUseDAOExtendStyle());
+                        //                        jsr310SupportBox.setSelected(selectedConfig.isJsr310Support());
+                        //                        annotationBox.setSelected(selectedConfig.isAnnotation());
+                        //                        useActualColumnNamesBox.setSelected(selectedConfig.isUseActualColumnNames());
+                        //                        useTableNameAliasBox.setSelected(selectedConfig.isUseTableNameAlias());
+                        //                        useExampleBox.setSelected(selectedConfig.isUseExample());
+                        //                        useLombokBox.setSelected(selectedConfig.isUseLombokPlugin());
                     }
                 }
             }
@@ -597,7 +615,7 @@ public class MybatisGeneratorMainUI extends JFrame {
         JPanel historyConfigPanel = new JPanel();
         historyConfigPanel.setLayout(new BoxLayout(historyConfigPanel, BoxLayout.Y_AXIS));
         historyConfigPanel.setPreferredSize(new Dimension(250, 0));
-        historyConfigPanel.setBorder(BorderFactory.createTitledBorder("config history"));
+        historyConfigPanel.setBorder(BorderFactory.createTitledBorder("Config History"));
         historyConfigPanel.add(ScrollPane);
         historyConfigPanel.add(btnPanel);
         return historyConfigPanel;
