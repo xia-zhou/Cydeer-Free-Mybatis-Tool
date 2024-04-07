@@ -35,6 +35,8 @@ public class Config {
      */
     private String daoPostfix;
 
+    private String modelPostFix;
+
     /**
      * 工程目录
      */
@@ -385,5 +387,13 @@ public class Config {
 
     public void setOverrideJava(boolean overrideJava) {
         this.overrideJava = overrideJava;
+    }
+
+    public String getModelPostFix() {
+        return modelPostFix;
+    }
+
+    public void setModelPostFix(String modelPostFix) {
+        this.modelPostFix = modelPostFix;
     }
 }

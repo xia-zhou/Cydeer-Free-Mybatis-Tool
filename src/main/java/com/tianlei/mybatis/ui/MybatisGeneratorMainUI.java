@@ -26,10 +26,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 插件主界面
@@ -207,6 +205,7 @@ public class MybatisGeneratorMainUI extends JFrame {
     private void onOK() {
         try {
             dispose();
+            String modelPostFix = Optional.ofNullable(config).map(Config::getModelPostFix).orElse("PO");
             List<String> result = new ArrayList<>();
             if (psiElements.length == 1) {
                 Config generator_config = new Config();
@@ -219,7 +218,7 @@ public class MybatisGeneratorMainUI extends JFrame {
                 generator_config.setDaoPackage(daoPackageField.getText());
                 generator_config.setXmlPackage(xmlPackageField.getText());
                 generator_config.setDaoName(modelName + "Mapper");
-                generator_config.setModelName(modelName + "PO");
+                generator_config.setModelName(modelName + modelPostFix);
                 generator_config.setPrimaryKey("id");
                 //generator_config.setOffsetLimit(offsetLimitBox.getSelectedObjects() != null);
                 //                useLombokBox.setSelected(true);
@@ -268,7 +267,7 @@ public class MybatisGeneratorMainUI extends JFrame {
                     generator_config.setDaoPackage(daoPackageField.getText());
                     generator_config.setXmlPackage(xmlPackageField.getText());
                     generator_config.setDaoName(modelName + "Mapper");
-                    generator_config.setModelName(modelName + "PO");
+                    generator_config.setModelName(modelName + modelPostFix);
                     generator_config.setPrimaryKey(primaryKey);
 
                     //generator_config.setOffsetLimit(offsetLimitBox.getSelectedObjects() != null);

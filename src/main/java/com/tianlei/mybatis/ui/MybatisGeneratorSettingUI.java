@@ -22,13 +22,15 @@ import java.util.Map;
 public class MybatisGeneratorSettingUI extends JDialog {
     public JPanel contentPanel = new JBPanel<>(new GridLayout(1, 1));
 
-    private JBTextField modelPackageField = new JBTextField(12);
+    private JBTextField modelPackageField = new JBTextField(35);
 
-    private JBTextField daoPackageField = new JBTextField(12);
+    private JBTextField daoPackageField = new JBTextField(35);
 
-    private JBTextField xmlPackageField = new JBTextField(12);
+    private JBTextField xmlPackageField = new JBTextField(35);
 
-    private JTextField daoPostfixField = new JTextField(10);
+    private JTextField daoPostfixField = new JTextField(35);
+
+    private JTextField modelPostfixField = new JTextField(3);
 
     private TextFieldWithBrowseButton projectFolderBtn = new TextFieldWithBrowseButton();
 
@@ -87,7 +89,7 @@ public class MybatisGeneratorSettingUI extends JDialog {
         projectFolderPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         JLabel projectLabel = new JLabel("project folder:");
         projectFolderPanel.add(projectLabel);
-        projectFolderBtn.setTextFieldPreferredWidth(45);
+        projectFolderBtn.setTextFieldPreferredWidth(55);
         projectFolderBtn.setText(projectFolder);
         projectFolderBtn.addBrowseFolderListener(
                 new TextBrowseFolderListener(FileChooserDescriptorFactory.createSingleFileOrFolderDescriptor()) {
@@ -106,6 +108,9 @@ public class MybatisGeneratorSettingUI extends JDialog {
         JPanel modelPanel = new JPanel();
         modelPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         modelPanel.setBorder(BorderFactory.createTitledBorder("Model Setting"));
+        modelPanel.add(new JLabel("Model postfix:"));
+        modelPostfixField.setText("PO");
+        modelPanel.add(modelPostfixField);
         JBLabel labelLeft4 = new JBLabel("package:");
         modelPanel.add(labelLeft4);
         modelPanel.add(modelPackageField);
@@ -267,7 +272,7 @@ public class MybatisGeneratorSettingUI extends JDialog {
         config.setDaoPackage(daoPackageField.getText());
         config.setXmlPackage(xmlPackageField.getText());
         config.setProjectFolder(projectFolderBtn.getText());
-
+        config.setModelPostFix(modelPostfixField.getText());
         //config.setOffsetLimit(offsetLimitBox.getSelectedObjects() != null);
         config.setComment(true);
         config.setOverrideXML(true);
