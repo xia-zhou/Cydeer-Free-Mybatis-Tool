@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.cydeer.plugin.mybatis</id>
     <name>Cydeer Free MyBatis Tool</name>
-    <version>2.2.3</version>
+    <version>2.2.4</version>
     <vendor email="zhangs_10@163.com" url="https://github.com/xia-zhou/Cydeer-Free-Mybatis-Tool">tianlei</vendor>
     <idea-version since-build="222"/>
     <description>

@@ -22,7 +22,7 @@ import java.util.Map;
 public class MybatisGeneratorSettingUI extends JDialog {
     public JPanel contentPanel = new JBPanel<>(new GridLayout(1, 1));
 
-    private JBTextField modelPackageField = new JBTextField(35);
+    private JBTextField modelPackageField = new JBTextField(30);
 
     private JBTextField daoPackageField = new JBTextField(35);
 
@@ -221,7 +221,7 @@ public class MybatisGeneratorSettingUI extends JDialog {
             modelPackageField.setText(config.getModelPackage());
             daoPackageField.setText(config.getDaoPackage());
             xmlPackageField.setText(config.getXmlPackage());
-
+            modelPostfixField.setText(config.getModelPostFix());
             projectFolderBtn.setText(config.getProjectFolder());
             //            offsetLimitBox.setSelected(config.isOffsetLimit());
             //            commentBox.setSelected(config.isComment());
